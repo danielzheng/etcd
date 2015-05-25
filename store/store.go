@@ -188,7 +188,9 @@ func (s *store) Set(nodePath string, dir bool, value string, expireTime time.Tim
 		e.PrevNode = prev.Node
 	}
 
-	s.WatcherHub.notify(e)
+    if (e.PreNode == nil) || (e.PrevNode != nil && *e.PrevNode.Value != value) {
+	    s.WatcherHub.notify(e)
+    }
 
 	return e, nil
 }
